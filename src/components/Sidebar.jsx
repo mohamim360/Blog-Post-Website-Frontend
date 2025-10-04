@@ -1,22 +1,40 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import union from "../assets/svg/Union (2).svg";
 import home from "../assets/fi-rr-home.png";
 import contentManagement from "../assets/fi-rr-interactive.png";
 
 const Sidebar = () => {
-  const menuItems = [
+  const navigate = useNavigate();
+
+  const [menuItems, setMenuItems] = useState([
     {
       id: 1,
       name: "Home",
       icon: home,
+      path: "/",
       isActive: true,
     },
     {
       id: 2,
       name: "Content Management",
       icon: contentManagement,
+      path: "/content-manager",
       isActive: false,
     },
-  ];
+  ]);
+
+  const handleClick = (clickedItem) => {
+    // Update active state
+    const updatedItems = menuItems.map((item) => ({
+      ...item,
+      isActive: item.id === clickedItem.id,
+    }));
+    setMenuItems(updatedItems);
+
+    // Navigate
+    navigate(clickedItem.path);
+  };
 
   return (
     <div className="flex flex-col w-[300px] h-screen bg-[#F8F8F8]">
@@ -31,6 +49,7 @@ const Sidebar = () => {
         {menuItems.map((item) => (
           <div
             key={item.id}
+            onClick={() => handleClick(item)}
             className={`flex items-center px-4 py-6 gap-2 w-full h-14 rounded-lg cursor-pointer transition-colors ${
               item.isActive ? "bg-[#F3EBFF]" : "hover:bg-gray-100"
             }`}

@@ -2,9 +2,9 @@ import edit from '../assets/svg/fi-rr-edit-alt.svg'
 import deleteIcon from '../assets/svg/fi-rr-trash.svg'
 const DashboardContent = () => {
   return (
-    <div className="flex flex-col items-start p-5 md:p-20 gap-2.5 w-full max-w-7xl">
+    <div className="flex flex-col items-start p-5 md:p-20 gap-2.5 w-full max-w-7xl ">
       {/* Main Content Frame */}
-      <div className="flex flex-col items-start p-0 w-full h-auto bg-gray-50 rounded-xl shadow-sm">
+      <div className="flex flex-col items-start p-0 w-full h-auto bg-gray-50 rounded-xl shadow-sm overflow-auto">
         {/* Header Section */}
         <div className="box-border flex flex-row items-center px-6 py-4 gap-4 w-full h-14 bg-gray-50 border-b border-gray-300 shadow-sm flex-none order-0 self-stretch">
           <div className="flex flex-row items-center p-0 gap-5 w-full h-7 flex-none order-0 flex-grow">
@@ -151,6 +151,14 @@ const tableData = [
   },
   {
     serial: "08",
+    title: "Best Budget Destinations for 2025",
+    status: "Scheduled",
+    views: "4,532",
+    date: "May 31, 2015",
+    author: "Leslie Alexander",
+  },
+  {
+    serial: "09",
     title: "Best Budget Destinations for 2025",
     status: "Scheduled",
     views: "4,532",

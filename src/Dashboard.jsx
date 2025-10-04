@@ -8,7 +8,7 @@ function Dashboard() {
      
       <Sidebar />
 
-      <div className="flex flex-col flex-1 h-screen overflow-hidden">
+      <div className="flex flex-col flex-1 h-screen overflow-auto">
         <Header />
 
        <DashboardContent />
