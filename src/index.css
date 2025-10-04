@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 
-.font-space-grotesk {
-  font-family: 'Space Grotesk', sans-serif;
+@layer base {
+  body {
+    @apply font-space-grotesk;
+  }
 }

@@ -1,3 +1,4 @@
+import DashboardContent from "./components/DashboardContent";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 
@@ -7,8 +8,10 @@ function Dashboard() {
      
       <Sidebar />
 
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 h-screen overflow-hidden">
         <Header />
+
+       <DashboardContent />
       </div>
     </div>
   );
