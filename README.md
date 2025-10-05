@@ -4,11 +4,10 @@ A full-stack blog management platform with an admin dashboard for creating, edit
 
 ## 🌐 Live Demo
 
-**Frontend URL:** [https://blog-post-website-frontend.netlify.app](https://blog-post-website-frontend.netlify.app)  
-**Backend API:** [http://localhost:5000/api](http://localhost:5000/api)
+**Frontend URL:** [https://blog-post-website-frontend.vercel.app](https://blog-post-website-frontend.vercel.app)  
+**Backend API:** [https://blog-post-website-backend.onrender.com/api](https://blog-post-website-backend.onrender.com/api)
 
 ### Demo Credentials
-
 ```
 Email: mohamim@gmail.com
 Password: hamham
@@ -19,117 +18,104 @@ Password: hamham
 ### Public Routes
 
 #### 1. Blog Listing Page (`/blog-list`)
-
 Browse all published blog posts with category filters and search functionality.
 
 ![Blog Listing Page](src/assets/blog-list.PNG)
 
 **Features:**
-
 - Category sidebar
 - Pagination
 - Responsive card layout
 
-**Live URL:** [https://blog-post-website-frontend.netlify.app/blog-list](https://blog-post-website-frontend.netlify.app/blog-list)
+
+**Live URL:** [https://blog-post-website-frontend.vercel.app/blog-list](https://blog-post-website-frontend.vercel.app/blog-list)
 
 ---
 
 #### 2. Recent Blogs Page (`/recent-blogs`)
-
 Showcase of the most recent blog posts in a grid layout.
 
 ![Recent Blogs Page](src/assets/recent-blogs.PNG)
 
 **Features:**
-
 - Modern grid layout
 - Featured images
 - Author avatars
 - Publication dates
 - Category tags
 
-**Live URL:** [https://blog-post-website-frontend.netlify.app/recent-blogs](https://blog-post-website-frontend.netlify.app/recent-blogs)
+**Live URL:** [https://blog-post-website-frontend.vercel.app/recent-blogs](https://blog-post-website-frontend.vercel.app/recent-blogs)
 
 ---
 
 ### Authentication Routes
 
 #### 3. Login Page (`/login`)
-
 Secure user authentication interface.
 
 ![Login Page](src/assets/login.PNG)
 
 **Features:**
-
 - Email/password authentication
 - Form validation
 - Error handling
 - Redirect to dashboard after login
 
-**Live URL:** [https://blog-post-website-frontend.netlify.app/login](https://blog-post-website-frontend.netlify.app/login)
+**Live URL:** [https://blog-post-website-frontend.vercel.app/login](https://blog-post-website-frontend.vercel.app/login)
 
 ---
 
 #### 4. Sign Up Page (`/signup`)
-
 New user registration page.
 
 **Features:**
-
 - User registration form
 - Password strength validation
 - Email verification
 - Automatic login after registration
 
-**Live URL:** [https://blog-post-website-frontend.netlify.app/signup](https://blog-post-website-frontend.netlify.app/signup)
+**Live URL:** [https://blog-post-website-frontend.vercel.app/signup](https://blog-post-website-frontend.vercel.app/signup)
 
 ---
 
 ### Protected Routes (Requires Authentication)
 
 #### 5. Dashboard Home (`/`)
-
 Main dashboard overview with blog post statistics.
 
 ![Dashboard Home](src/assets/home.PNG)
 
 **Features:**
-
 - Total posts count
 - Recent posts table
 
-**Live URL:** [https://blog-post-website-frontend.netlify.app/](https://blog-post-website-frontend.netlify.app/) _(Login required)_
+**Live URL:** [https://blog-post-website-frontend.vercel.app/](https://blog-post-website-frontend.vercel.app/) _(Login required)_
 
 ---
 
 #### 6. Content Manager (`/content-manager`)
-
 Advanced content management interface for creating and managing blog posts.
 
 ![Content Manager](src/assets/dashboard.PNG)
 
 **Features:**
-
 - Collection types sidebar
 - Post creation and editing
 - Image upload
 - Category and tag management
 - Draft/publish workflow
 
-**Live URL:** [https://blog-post-website-frontend.netlify.app/content-manager](https://blog-post-website-frontend.netlify.app/content-manager) _(Login required)_
+**Live URL:** [https://blog-post-website-frontend.vercel.app/content-manager](https://blog-post-website-frontend.vercel.app/content-manager) _(Login required)_
 
 ---
 
 #### 7. Blog Post Form (Create/Edit)
-
 Comprehensive blog post editor with rich text capabilities.
 
 ![Blog Post Form](src/assets/model.PNG)
 
 **Features:**
-
-- Image upload
+- Image upload 
 - Category multi-select
 - Tag management
 - SEO meta description
@@ -145,7 +131,6 @@ Comprehensive blog post editor with rich text capabilities.
 ## 🚀 Features
 
 ### Frontend Features
-
 - **User Authentication** - Secure login and registration system
 - **Blog Post Management**
   - Create, edit, and delete blog posts
@@ -162,7 +147,6 @@ Comprehensive blog post editor with rich text capabilities.
   - Responsive design for all devices
 
 ### Backend Features
-
 - RESTful API architecture
 - JWT-based authentication
 - Image upload to Cloudinary
@@ -173,7 +157,6 @@ Comprehensive blog post editor with rich text capabilities.
 ## 🛠️ Tech Stack
 
 ### Frontend
-
 - **React** - UI library
 - **React Router** - Client-side routing
 - **Axios** - HTTP client
@@ -182,7 +165,6 @@ Comprehensive blog post editor with rich text capabilities.
 - **Vite** - Build tool
 
 ### Backend
-
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
 - **MongoDB** - Database
@@ -195,7 +177,6 @@ Comprehensive blog post editor with rich text capabilities.
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
-
 - Node.js (v14 or higher)
 - npm or yarn
 - MongoDB (local or Atlas account)
@@ -204,7 +185,6 @@ Before you begin, ensure you have the following installed:
 ## 🔧 Installation
 
 ### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/mohamim360/Blog-Post-Website-Frontend.git
 ```
@@ -223,7 +203,6 @@ touch .env
 ```
 
 Add the following environment variables to `.env`:
-
 ```env
 # Server Configuration
 PORT=3000
@@ -263,7 +242,6 @@ touch .env
 ```
 
 Add the following environment variable to `.env`:
-
 ```env
 VITE_API_URL=http://localhost:3000/api
 ```
@@ -339,7 +317,6 @@ blog-post-management/
 ## 🔐 API Endpoints
 
 ### Authentication
-
 ```
 POST   /api/auth/register    - Register new user
 POST   /api/auth/login       - Login user
@@ -347,7 +324,6 @@ GET    /api/auth/me          - Get current user (protected)
 ```
 
 ### Blog Posts
-
 ```
 GET    /api/blog-posts              - Get all posts (with filters)
 GET    /api/blog-posts/:id          - Get post by ID
@@ -359,7 +335,6 @@ PATCH  /api/blog-posts/:id/publish  - Publish post (protected)
 ```
 
 ### Upload
-
 ```
 POST   /api/upload/image            - Upload image (protected)
 DELETE /api/upload/image/:filename  - Delete image (protected)
@@ -393,14 +368,12 @@ DELETE /api/upload/image/:filename  - Delete image (protected)
 ### Frontend (Netlify)
 
 1. Build the frontend:
-
 ```bash
 cd frontend
 npm run build
 ```
 
 2. Create a `_redirects` file in the `public` folder:
-
 ```
 /*    /index.html   200
 ```
@@ -415,7 +388,6 @@ npm run build
 
 1. Ensure all environment variables are set
 2. Add start script in `package.json`:
-
 ```json
 "scripts": {
   "start": "node main.js",
