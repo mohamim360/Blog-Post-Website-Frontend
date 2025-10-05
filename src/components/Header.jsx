@@ -1,5 +1,6 @@
 import Vector from "../assets/svg/Vector.svg";
 import bell from "../assets/svg/bell-01.svg";
+import { User } from "lucide-react";
 
 const Header = () => {
   return (
@@ -19,9 +20,16 @@ const Header = () => {
         <img src={bell} alt="Notification Bell" className="w-6 h-6" />
       </div>
 
-      {/* Profile Section */}
-      <div className="flex items-center py-1 px-2 gap-2 w-[92px] h-16 border border-[#DBDBDB] rounded-lg">
-        <div className="w-14 h-14 bg-cover rounded-lg"></div>
+      {/* Profile Section with Avatar */}
+      <div className="flex items-center py-1 px-2 gap-2 h-16 border border-[#DBDBDB] rounded-lg">
+        {/* Avatar */}
+        <div className="w-14 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center overflow-hidden">
+       
+          <User size={28} className="text-white" />
+         
+        </div>
+        
+        {/* Dropdown Arrow */}
         <img src={Vector} alt="Dropdown Arrow" className="w-4 h-4" />
       </div>
     </div>

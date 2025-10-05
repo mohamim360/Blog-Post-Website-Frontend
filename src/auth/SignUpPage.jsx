@@ -1,39 +1,66 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import union from "../assets/svg/Union.svg"; 
+import { Link, useNavigate } from "react-router-dom";
+import union from "../assets/svg/Union.svg";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
- 
     email: "",
     password: "",
-  
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
+    setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
- 
-    // Add your signup logic here
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Save token to localStorage
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
+
+        console.log("Registration successful:", data.data.user);
+        navigate("/");
+      } else {
+        setError(data.message || "Registration failed");
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
- 
-
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#6200EE] overflow-hidden">
+      {/* Background pattern */}
       <div
         className="absolute inset-0 opacity-40"
         style={{
@@ -42,7 +69,8 @@ export default function SignUpPage() {
           backgroundSize: "300px 300px, 300px 300px",
           backgroundPosition: "0 0, 150px 150px",
           maskImage: "radial-gradient(circle, transparent 40%, black 41%)",
-          WebkitMaskImage: "radial-gradient(circle, transparent 40%, black 41%)",
+          WebkitMaskImage:
+            "radial-gradient(circle, transparent 40%, black 41%)",
         }}
       />
 
@@ -59,11 +87,15 @@ export default function SignUpPage() {
           </p>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        )}
+
         {/* Form */}
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-          {/* Full Name */}
-        
-
           {/* Email */}
           <div className="flex flex-col gap-2">
             <label className="text-gray-900 text-base">Email</label>
@@ -137,13 +169,13 @@ export default function SignUpPage() {
             </div>
           </div>
 
-  
           {/* Sign Up Button */}
           <button
             type="submit"
-            className="w-full h-14 bg-[#6200EE] text-white rounded-lg font-medium hover:bg-[#4D00BB] transition"
+            disabled={loading}
+            className="w-full h-14 bg-[#6200EE] text-white rounded-lg font-medium hover:bg-[#4D00BB] transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Sign Up
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
 

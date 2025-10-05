@@ -1,25 +1,64 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import union from "../assets/svg/Union.svg"; 
+import { Link, useNavigate } from "react-router-dom";
+import union from "../assets/svg/Union.svg";
+import union2 from "../assets/svg/Union (2).svg";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
+    setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login attempt:", formData);
-    // Add your login logic here
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Save token to localStorage
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
+
+        console.log("Login successful:", data.data.user);
+
+        // Redirect based on user role
+        if (data.data.user.role === "content_manager") {
+          navigate("/content-manager");
+        } else {
+          navigate("/");
+        }
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -28,6 +67,7 @@ export default function LoginPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#6200EE] overflow-hidden">
+      {/* Background pattern */}
       <div
         className="absolute inset-0 opacity-40"
         style={{
@@ -36,22 +76,29 @@ export default function LoginPage() {
           backgroundSize: "300px 300px, 300px 300px",
           backgroundPosition: "0 0, 150px 150px",
           maskImage: "radial-gradient(circle, transparent 40%, black 41%)",
-          WebkitMaskImage: "radial-gradient(circle, transparent 40%, black 41%)",
+          WebkitMaskImage:
+            "radial-gradient(circle, transparent 40%, black 41%)",
         }}
       />
 
       {/* Login Card */}
-      <div className="relative z-10 w-[400px] bg-white border border-gray-300 shadow-2xl rounded-xl p-8 flex flex-col gap-6">
+      <div className="relative z-20 w-[400px] bg-white border border-gray-300 shadow-2xl rounded-xl p-8 flex flex-col gap-6">
         {/* Logo & Title */}
         <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#6200EE] rounded-md shadow-md" />
-            <h1 className="text-2xl font-bold text-[#6200EE]">Newsx</h1>
+          <div className="flex items-center gap-2" >
+            <img src={union2} alt="Logo"  />
           </div>
           <p className="text-center text-gray-900 font-medium">
             Welcome Newsx, Please Log In
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
@@ -82,7 +129,6 @@ export default function LoginPage() {
                 className="flex-1 h-full bg-transparent outline-none text-gray-900"
                 required
               />
-              {/* Eye icon */}
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
@@ -132,9 +178,10 @@ export default function LoginPage() {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full h-14 bg-[#6200EE] text-white rounded-lg font-medium hover:bg-[#4D00BB] transition"
+            disabled={loading}
+            className="w-full h-14 bg-[#6200EE] text-white rounded-lg font-medium hover:bg-[#4D00BB] transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 

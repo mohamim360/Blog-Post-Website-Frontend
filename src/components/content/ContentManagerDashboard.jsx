@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import admin from "../../assets/svg/clarity_administrator-solid.svg";
 import leaf from "../../assets/svg/fi-rr-leaf.svg";
 import listCheck from "../../assets/svg/fi-rr-list-check.svg";
@@ -15,7 +16,6 @@ import caretRight from "../../assets/svg/fi-rr-caret-right.svg";
 import Vector from "../../assets/svg/Vector (1).svg";
 import DashboardContent from "../DashboardContent";
 import BlogPosts from "../BlogPosts";
-
 
 const ContentEditorSidebar = ({ activeCollectionType, setActiveCollectionType }) => {
   const collectionTypes = [
@@ -86,16 +86,46 @@ const ContentEditorSidebar = ({ activeCollectionType, setActiveCollectionType })
       </div>
     </div>
     </div>
-    
   );
 };
 
 const ContentManagerDashboard = () => {
   const [activeSidebarMenu, setActiveSidebarMenu] = useState("");
   const [activeCollectionType, setActiveCollectionType] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  // Get current user from localStorage on component mount
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        setCurrentUser(userData);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        // Fallback: try to get username or email
+        setCurrentUser({ name: user });
+      }
+    }
+  }, []);
+
+  const handleUserClick = () => {
+    navigate('/');
+  };
+
+  // Get display name from user object
+  const getUserDisplayName = () => {
+    if (!currentUser) return "Guest User";
+    
+    if (currentUser.name) return currentUser.name;
+    if (currentUser.username) return currentUser.username;
+    if (currentUser.email) return currentUser.email;
+    
+    return "User";
+  };
 
   return (
-    
     <div className="flex h-screen bg-white overflow-hidden">
       {/* Main Sidebar */}
       <div className="flex flex-col justify-between w-[291px] bg-white border-r border-gray-200 px-2 py-4">
@@ -151,7 +181,7 @@ const ContentManagerDashboard = () => {
                 { icon: apps, text: "Media Library" },
                 { icon: lineWidth, text: "Guidelines" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 cursor-pointer">
+                <div key={i} className="flex items-center gap-3 cursor-pointer hover:text-[#CB30E0] transition-colors">
                   <img src={item.icon} alt={`${item.text} Icon`} className="w-5 h-5" />
                   <span className="text-[#4A4A4A] text-[15px]">{item.text}</span>
                 </div>
@@ -168,7 +198,7 @@ const ContentManagerDashboard = () => {
                 { icon: megaphone, text: "Marketplace" },
                 { icon: flower, text: "Settings" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 cursor-pointer">
+                <div key={i} className="flex items-center gap-3 cursor-pointer hover:text-[#CB30E0] transition-colors">
                   <img src={item.icon} alt={`${item.text} Icon`} className="w-5 h-5" />
                   <span className="text-[#4A4A4A] text-[15px]">{item.text}</span>
                 </div>
@@ -178,12 +208,21 @@ const ContentManagerDashboard = () => {
         </div>
 
         {/* Bottom User Section */}
-        <div className="flex items-center justify-between px-3 mt-6">
+        <div className="flex items-center justify-between px-3 mt-6 py-2 rounded-lg hover:bg-gray-100 transition-colors">
           <div className="flex items-center gap-2">
-            <img src={user} alt="User Icon" className="w-6 h-6" />
-            <span className="text-[#4A4A4A] text-[15px]">Mansi Canopas</span>
+            <div className="w-8 h-8  rounded-full flex items-center justify-center">
+              <img src={user} alt="User Icon" className="w-4 h-4 invert" />
+            </div>
+            <span className="text-[#4A4A4A] text-[15px] truncate max-w-[150px]">
+              {getUserDisplayName()}
+            </span>
           </div>
-          <img src={Vector} alt="Dropdown Arrow" className="w-4 h-4 cursor-pointer" />
+          <img 
+            src={Vector} 
+            alt="Dropdown Arrow" 
+            className="w-4 h-4 cursor-pointer hover:opacity-70 transition-opacity" 
+            onClick={handleUserClick}
+          />
         </div>
       </div>
 
@@ -197,7 +236,7 @@ const ContentManagerDashboard = () => {
 
       {/* Middle Content */}
       {activeCollectionType === "post" && 
-      <div className="my-auto overflow-auto ">
+      <div className="my-auto overflow-auto w-full">
         <BlogPosts/>
       </div>
       }
